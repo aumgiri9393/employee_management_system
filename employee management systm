@@ -1,0 +1,187 @@
+#include <iostream>
+using namespace std;
+
+class employee{
+public:
+    string empid;
+    char emp_name[20];
+    char emp_address[50];
+    int emp_salary;
+    int date,month,year;
+    long long emp_phone;
+
+public:
+    void get_emp_details();
+    void display_details();
+    int get_phone();
+    void del_details();
+    void get_dob();
+
+};
+
+void employee :: get_emp_details(){
+    cout<<"\nEmployee ID: ";
+    cin>>empid;
+    cout<<"\nEmployee Name: ";
+    cin>>emp_name;
+    cout<<"\nEmployee Address: ";
+    cin>>emp_address;
+    get_dob();
+    cout<<"\nEmployee Salary: ";
+    cin>>emp_salary;
+    get_phone();
+}
+int employee :: get_phone() {
+    cout<<"\nEmployee Phone Number: ";
+    cin>>emp_phone;
+    if (emp_phone<1000000000 || emp_phone>9999999999){
+        cout<<"\nINVALID NUMBER\nTry Again";
+        get_phone();
+    }
+    return 0;
+}
+
+void employee :: display_details() {
+    cout<<"\nEmployee ID: "<<empid;
+    cout<<"\nEmployee Name: "<<emp_name;
+    cout<<"\nEmployee Address: "<<emp_address;
+    cout<<"\nEmployee Date of Birth (dd mm yyyy): "<<date<<"-"<<month<<"-"<<year;
+    cout<<"\nEmployee Salary: "<<emp_salary;
+    cout<<"\nEmployee Phone Number: "<<emp_phone<<endl;
+}
+
+void employee :: get_dob(){
+    cout<<"\nEmployee date of birth (dd mm yyyy): ";
+    cin>>date;
+    cin>>month;
+    cin>>year;
+    if ((date<1 || date>31) || (month<1 || month>12) || (year<1900 || year>2021)){
+        cout<<"\nInvalid Date \nEnter Again";
+        get_dob();
+    }
+}
+
+void employee::del_details()
+{
+    empid = ' ';
+    emp_name[20] = {};
+    emp_address[50] = {};
+    emp_salary = 0000;
+    emp_phone = 00000;
+    date = 00;
+    month = 00;
+    year = 0000;
+}
+
+int main() {
+   employee emp_arr[100];
+   int num_emp,i,choice;
+   string id;
+   cout<<"Enter the number of employees: ";
+   cin>>num_emp;
+
+    do{
+        cout<<"\nYou can perform following operations\nEnter appropriate choice";
+        cout<<"\n1: Add employee details";
+        cout<<"\n2: Display employee details";
+        cout<<"\n3: Search employee details";
+        cout<<"\n4: Update employee details";
+        cout<<"\n5: Delete employee details ";
+        cout<<"\n6: Exit ";
+        cin>>choice;
+
+        switch(choice)
+        {
+        case 1:
+            {
+        for (i=0;i<num_emp;i++)
+        {
+            cout<<"\nDetails of Employee"<<i+1;
+            emp_arr[i].get_emp_details();
+        }
+        break;
+            }
+
+        case 2:
+            {
+                cout<<"\nDisplaying details of employee: ";
+
+            for(i=0;i<num_emp;i++)
+            {
+                cout<<"\nEmployee"<<i+1;
+                emp_arr[i].display_details();
+            }
+        break;
+            }
+        case 3:
+            {
+                
+                for(i=0;i<1;i++)
+            {
+                cout<<"\nEnter the employee ID: ";
+                   cin>>id;
+               for(int j=0;j<num_emp;j++)
+               {
+                    if(emp_arr[j].empid==id)
+                    {
+                        cout<<"\nEmployee Found\nDisplaying deatails";
+                        emp_arr[j].display_details();
+                        break;
+                    }
+                    if(j==(num_emp-1))
+                    {
+                        cout<<"Employee id does not exists"<<endl;
+                    }
+               }
+            }
+            break;
+            }
+        case 4:
+            {
+                cout<<"Enter employee ID to be updated: ";
+                cin>>id;
+                for(int j=0;j<num_emp;j++)
+               {
+                    if(emp_arr[j].empid==id)
+                    {
+                        cout<<"\nEmployee Found\nDisplaying deatails";
+                        emp_arr[j].display_details();
+                        
+                        cout<<"Enter New Details"<<endl;
+                        emp_arr[j].get_emp_details();
+                        break;
+                    }
+                    if(j==(num_emp-1))
+                    {
+                        cout<<"Employee id does not exists"<<endl;
+                    }
+               }
+                break;
+            }
+        case 5:
+        {
+            cout<<"Enter employee ID to be deleted: ";
+            cin>>id;
+            for(i=0;i<num_emp;i++)
+            {
+                 if(emp_arr[i].empid==id)
+                 {
+                     emp_arr[i].del_details();
+                 }
+                 if(i==(num_emp-1))
+                    {
+                        cout<<"Employee id does not exists"<<endl;
+                    }
+            }
+            break;
+        }
+        case 6:
+            {
+                break;
+            }
+        default: cout<<"error in input try again";
+        }
+    }while(choice!=6);
+
+    return 0;
+}
